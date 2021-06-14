@@ -148,17 +148,22 @@ function cancelFavorite(gno){
 
 function addFavorite(gno){
 	var uno = sessionStorage.getItem("uno");
-	console.log("session:"+uno);
-    AJAX.call("jsp/favoriteAdd.jsp", {uno:uno,gno:gno}, function(data) {
-       var code = data.trim();
-       if(code == "ER"){
-    	   alert("즐겨찾기중 오류가 발생하였습니다.");
-    	   location.reload();
-       }else{
-    	   alert("즐겨찾기가 성공적으로 완료되었습니다..");
-    	   location.reload();
-       }
-    });
+	if(uno == null){
+		alert("로그인이 필요한 서비스 입니다.");
+		showLogin();
+	}
+	else{
+	    AJAX.call("jsp/favoriteAdd.jsp", {uno:uno,gno:gno}, function(data) {
+	       var code = data.trim();
+	       if(code == "ER"){
+	    	   alert("즐겨찾기중 오류가 발생하였습니다.");
+	    	   location.reload();
+	       }else{
+	    	   alert("즐겨찾기가 성공적으로 완료되었습니다..");
+	    	   location.reload();
+	       }
+	    });
+	}
 }
 
 function isFavorite(gno){
@@ -194,6 +199,7 @@ function menuSet(){
 
 function showSidebar(user){
 	var str = '';
+	$("#lowDis").html(str);
     str += '<div class = "sidebar">';
     if(user == null){
     	 str += '<button class="loginbtn" onclick = "showLogin()">로그인</button>';
@@ -227,15 +233,31 @@ function closeMenu(){
    var str =""
    $("#menuap").html(str);
 }
+
 function showLogin(){
    window.location.href = "login.html";
 }
+
 function showUserDetail() {
-   window.location.href = "user.html";   
+	var uno = sessionStorage.getItem("uno");
+	if(uno ==null){
+		alert("로그인이 필요한 서비스 입니다.");
+		showLogin();
+	}else{
+		window.location.href = "user.html";  
+	}
 }
+
 function showFavorite(){
-   window.location.href = "favorite.html";
+	var uno = sessionStorage.getItem("uno");
+	if(uno ==null){
+		alert("로그인이 필요한 서비스 입니다.");
+		showLogin();
+	}else{
+		window.location.href = "favorite.html";
+	}
 }
+
 function showNotice(){
    window.location.href = "noticeList.html";
 }

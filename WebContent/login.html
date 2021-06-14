@@ -3,6 +3,8 @@
 <meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
 <meta charset="utf-8">
 <link rel="stylesheet" href="css/core.css">
+<script src="https://kit.fontawesome.com/da8787eeee.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
 <title>MySNS</title>
 <style>
 .desc {
@@ -14,7 +16,11 @@
 </style>
 </head>
 <body>
-	<div class="page-hdr">헬맵</div>
+	<nav class="navbar navbar_items">
+			<button style="color: white;" onclick="back()"><i class="fas fa-chevron-left"></i></button>
+			<div>로그인</div>
+			<button></button>
+	</nav>
 	<div class="page-body">
 		<div class="section pad-24 mtop-30">
 			<input id="id" type="text" placeholder="아이디 (이메일주소)">
@@ -68,4 +74,9 @@ function login() {
 		}
 	});
 }
+
+function back() {
+	window.history.back();
+}
+
 </script>
