@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<meta charset="utf-8">
+<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
+<script src="https://kit.fontawesome.com/da8787eeee.js" crossorigin="anonymous"></script>
+<title>즐겨찾기</title>
+</head>
+<body>
+   <div id="all">
+      <div class="addMachine">
+         <nav class="navbar navbar_items">
+            <button style="color: white;" onclick="back()"><i class="fas fa-chevron-left"></i></button>
+            <div>기구추가</div>
+            <button></button>
+         </nav>
+         <div class="machine-options">
+            <select name="machines" id="machine-select">
+                  <option value="">--기구 선택--</option>
+                
+                </select>
+         </div>
+         <button class="button-align" onclick="addOwn()">추가하기</button>
+      </div>
+   </div>
+</body>
+</html>
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+$(document).ready(function(){
+   AJAX.call("jsp/machineList.jsp", null, function(data){
+      var str = '';
+      var machineList = JSON.parse(data.trim());
+      console.log(machineList);
+      for(var i =0; i<machineList.length; i++){
+         str += showMachine(machineList[i]);
+      }
+      $("#machine-select").html(str);
+      
+   });
+});
+
+function showMachine(machine){
+   var str = '';
+   str += '<option value="'+machine.mno+'">'+machine.name+'</option>';
+   return str;
+}
+
+function addOwn() {
+	var gno = sessionStorage.getItem("gno");
+	var mno = $("#machine-select").val().trim();
+	AJAX.call("jsp/ownAdd.jsp",{gno : gno, mno : mno}, function(data){
+	      var code = data.trim();
+	      if(code=="OK"){
+	    	  alert("시설에 기구 추가가 완료되었습니다");
+	    	  back();
+	      }else{
+	    	  alert("시설에 기구 추가중 오류가 발생하였습니다");
+	    	  back();
+	      }
+	});
+}
+
+function back() {
+   window.history.back();
+}
+
+function userDetailManage() {
+   window.location.href = "userDetailManage.html";
+}
+</script>

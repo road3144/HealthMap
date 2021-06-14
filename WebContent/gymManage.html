@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<meta charset="utf-8">
+<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
+<script src="https://kit.fontawesome.com/da8787eeee.js" crossorigin="anonymous"></script>
+<title>회원상세</title>
+</head>
+<body>
+   <div id="all">
+   <nav class="navbar navbar_items">
+   <button style="color: white;" onclick="back()"><i class="fas fa-chevron-left"></i></button>   
+   <div>시설관리</div>
+   <button style="color:white;" onclick="gymAdd()"><i class="fas fa-plus-square"></i></button>
+   </nav>
+<div id = "gymlist"></div>
+</div>
+</body>
+
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+var 데이터 = [];
+$(document).ready(function(){
+   AJAX.call("jsp/gymManage.jsp", null, function(data) {
+      gymList = JSON.parse(data.trim());
+      setData(gymList);
+   });
+});
+
+function setData(gymList){
+   var str = '';
+    for(var i =0; i < gymList.length; i++){
+       str += showGymList(gymList[i]);   
+   }
+    $("#gymlist").append(str);
+};
+
+function showGymList(gymlist){
+   str = '';
+   str += '<div style="border:1px solid #000; height:30%;">';
+   str += '<div class="facility">';
+   str += '<button>'+gymlist.name+'</button>';      
+   str += '</div>';
+   str += '<div class="numberAndAddress">';    
+   str += '<span>'+gymlist.tel+'</span><br>';
+   str += '<span>'+gymlist.address+'</span>';      
+   str += '</div>';
+   str += '<button class="facilitybtn" onclick="gymDetailManage('+gymlist.gno+')">시설상세</button>';         
+   str += '</div>';
+   return str;
+}
+
+function back() {
+   window.history.back();
+}
+
+function gymAdd() {
+   window.location.href = "gymAdd.html";
+}
+
+function gymDetailManage(gno) {
+   sessionStorage.setItem("gno", gno);
+   window.location.href = "gymOwn.html";
+}
+</script>

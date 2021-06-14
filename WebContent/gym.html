@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<meta charset="utf-8">
+<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
+<script src="https://kit.fontawesome.com/da8787eeee.js" crossorigin="anonymous"></script>
+<title>즐겨찾기</title>
+</head>
+<body>
+<div style="height:100vh;">
+	<nav class="navbar navbar_items">
+		<button style="color: white;" onclick="back()"><i class="fas fa-chevron-left"></i></button>
+		<div>시설상세</div>
+		<button></button>
+	</nav>
+	<div id = "gymarea"></div>
+</div>
+</body>
+</html>
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+$(document).ready(function(){
+	   gno = sessionStorage.getItem("gno");
+	   AJAX.call("jsp/gymGet.jsp", {gno : gno}, function(data){
+	      gym = JSON.parse(data.trim());
+	      AJAX.call("jsp/own.jsp", {gno : gno}, function(data){
+	            mList = JSON.parse(data.trim());
+	            showGym(gym,mList)
+	      });
+	   });
+	});
+
+function showGym(gym, mList){
+	var uno = sessionStorage.getItem("uno");
+	var str = '';
+	str += '<div style="height:30%; border:1px solid #000;">';
+	str += '<div class="facility">';
+	str += '<button>'+ gym.name +'</button>';
+	if(uno!=null){
+		if(isFavorite(gym.gno)){
+			str += '<button onclick="cancelFavorite('+ gym.gno +')"><i class="far fa-star" style="color:yellow;"></i>즐겨찾기</button>';
+		}else{
+			str += '<button onclick="addFavorite('+ gym.gno +')"><i class="far fa-star"></i>즐겨찾기</button>';
+		}
+	}else{
+		str += '<button onclick="addFavorite('+ gym.gno +')"><i class="far fa-star"></i>즐겨찾기</button>';
+	}
+	str += '</div>'; //facility
+	str += '<div class="numberAndAddress">';
+	str += '<span>전화번호  '+ gym.tel +'</span><br>';
+	str += '<span>주소 '+gym.address+'</span>';
+	str += '</div>'; //numberAndAddress
+	str += '</div>';
+	for(var i=0;i<mList.length;i++){
+	 str += showMachine(mList[i]);
+	}
+	$("#gymarea").html(str);
+}
+
+function showMachine(machine){
+	var str = '';
+	str += '<div class="noticeItem" style="height:7vh;">';
+	str += '<div class="align" style="flex:4; border-right:1px solid #0f0f0f;">'+ machine.name +'</div>';
+	str += '</div>';
+	return str;
+}
+
+function cancelFavorite(gno){
+	var uno = sessionStorage.getItem("uno");
+	AJAX.call("jsp/favoriteDelete.jsp", {uno:uno,gno:gno}, function(data) {
+		var code = data.trim();
+	       if(code == "ER"){
+	    	   alert("즐겨찾기취소중 오류가 발생하였습니다.");
+	    	   location.reload();
+	       }else{
+	    	   alert("즐겨찾기취소가 성공적으로 완료되었습니다..");
+	    	   location.reload();
+	       }
+	});
+}
+
+function addFavorite(gno){
+	var uno = sessionStorage.getItem("uno");
+	console.log("session:"+uno);
+    AJAX.call("jsp/favoriteAdd.jsp", {uno:uno,gno:gno}, function(data) {
+       var code = data.trim();
+       if(code == "ER"){
+    	   alert("즐겨찾기중 오류가 발생하였습니다.");
+    	   location.reload();
+       }else{
+    	   alert("즐겨찾기가 성공적으로 완료되었습니다..");
+    	   location.reload();
+       }
+    });
+}
+function isFavorite(gno){
+	var uno = sessionStorage.getItem("uno");
+	var result;
+	AJAX.call("jsp/favoriteIs.jsp", {uno : uno,gno:gno,result : result}, function(data) {
+		var code = data.trim();
+		console.log(code);
+		if(code == "NE"){ 
+			result = false;
+		}else{
+			result = true;
+		}
+    },false,true);
+	return result;
+}
+
+function back() {
+   window.history.back();
+}
+</script>

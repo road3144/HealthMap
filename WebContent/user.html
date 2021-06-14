@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<meta charset="utf-8">
+<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
+<script src="https://kit.fontawesome.com/da8787eeee.js" crossorigin="anonymous"></script>
+<title>회원상세</title>
+</head>
+<body>
+	<div id="all">
+		<nav class="navbar navbar_items">
+			<button style="color: white;" onclick="back()"><i class="fas fa-chevron-left"></i></button>
+			<div>회원상세</div>
+			<button style="color: white;" onclick="user()">수정</button>
+		</nav>
+		<div id="user"></div>
+	</div>
+</body>
+</html>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+$(document).ready(function(){
+	var uno = sessionStorage.getItem("uno");
+	
+	if(uno==null){
+		alert("로그인이 필요한 서비스 입니다.");
+		window.location.href = "login.html";
+	}else{
+		AJAX.call("jsp/userGet.jsp", {uno : uno}, function(data) {
+			var userstr = data.trim();
+			var user = JSON.parse(userstr);
+			showUser(user);
+	    });
+	}
+});
+function showUser(user){
+	console.log(user);
+	var str = '';
+	str += '<div class="imgAndName">';
+	str += '<img class="myimg" src="./images/'+ user.images[0] +'">';
+	str += '<span class="myname" style="top: 0;">'+ user.name+'</span>';
+	str += '</div>'; // imgAndName
+	str += '<div class="numberAndAddress">';
+	str += '<span>전화번호 '+ user.tel +'</span><br> ';
+	str += '<span>주소 '+ user.address +'</span><br>';
+	str += '<span>생년월일 '+ user.birth +'</span>';
+	str += '</div>';
+	$("#user").html(str);
+}
+
+function notice() {
+	window.location.href = "notice.html";
+}
+
+function user() {
+	window.location.href = "updateUser.html";
+}
+
+function favorite() {
+	window.location.href = "favorite.html";
+}
+
+function back() {
+	window.history.back();
+}
+</script>

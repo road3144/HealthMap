@@ -1,0 +1,265 @@
+* {
+   margin:0;
+   padding:0;
+   box-sizing: border-box;
+}
+
+button {
+   font-size:1em;
+   margin:12px 8px;
+   background-color:transparent;
+   border:none;
+}
+
+.navbar {
+   background-color:#263343;
+   color:white;
+   padding: 8px 12px;
+   height: 8vh;
+}
+
+.navbar_items {
+   display:flex;
+   justify-content:space-between;
+   align-items: center;
+   font-size:1.5em;
+}
+
+div[class="sidebar"] {
+   width:60%;
+   height:92%;
+   background:#fff;
+   position:fixed;
+   bottom:0;
+   left:0;
+   background-color:#aeaeae;
+   border:1px solid #eee;
+   z-index:1;
+   display:flex;
+   flex-direction:column;
+   padding:12px;
+}
+
+div[class="sidebarRight"]{
+   position:fixed;
+   height:92%;
+   width:40%;
+   right:0;
+   bottom:0;
+}
+
+.loginbtn {
+   position:absolute;
+   right:0;
+   top:0;
+   padding:0 10px;
+   margin-right:12px;
+   border:1px solid #fff;
+}
+
+.myimg {
+   width:50%;
+   height:100%;
+   object-fit:cover;
+   border-radius:5px;
+}
+
+.myname {
+   margin-left:30px;
+   font-size:1.3em;
+}
+
+.imgAndName {
+   display:flex;
+   flex-direction:row;
+   padding-top: 2em;
+   height:30%;
+   color:#000;
+}
+
+.wrapper {
+   height:100%;
+   display:flex;
+   flex-direction:column;
+   text-align:center;
+   justify-content:flex-start;
+}
+
+.sbbtn {
+   height:15%;
+   margin:12px 8px;
+   font-size:1.5em;
+}
+
+#map {
+   width: 100vw;
+   height: 92vh;
+   z-index:0;
+}
+
+div[class="lowbar"] {
+   width:100%;
+   height:45%;
+   background:#fff;
+   position:fixed;
+   left:0;
+   bottom: 0;
+   background-color:#aeaeae;
+   border:1px solid #eee;
+   z-index:1;
+   padding: 8px 12px;
+}
+
+div [class="lowbarOver"]{
+   width:100%;
+   height:47%;
+   position:fixed;
+   left:0;
+   top: 8vh;
+}
+
+
+.facility {
+   height:30%;
+   display:flex;
+   flex-direction:row;
+   border:1px solid #eee;
+   justify-content:space-around;
+   margin:1em;
+   align-items:center;
+   font-size:1.3em;
+}
+
+.facilitybtn {
+   border:1px solid #eee;
+   display:block;
+   margin-left:auto;
+   margin-right:5%;
+   padding:0.3em;
+}
+
+.numberAndAddress  {
+   margin:1em;
+   display:flex;
+   flex-direction:column;
+}
+
+#all {
+   height:100vh;
+   width:100vw;
+}
+
+#middleSection {
+   height:60%;
+}
+
+.machine {
+   list-style:none;
+   width:100%;
+   height:7vh;
+   border:1px solid #000;
+   align-items:center;
+   display:flex;
+   flex-direction:row;
+   justify-content:space-around;
+}
+
+.noticeList {
+   height:92vh;
+}
+
+table {
+   width:100%;
+   height:10%;
+   border:1px solid #000;
+   border-collapse: collapse;
+}
+
+table tr th {
+   border:1px solid #000;
+}
+
+.noticeItem {
+    display:flex;
+   font-size:1.5em;
+   height:10vh;
+   border:1px solid #0f0f0f;
+}
+
+.align {
+   display:flex;
+   justify-content:space-around;
+   align-items:center;
+}
+
+.noticeContent {
+   height:auto;
+   padding:1em;
+   border:1px solid #000;
+}
+
+.adminMain {
+   height:92%;
+    display:flex;
+    flex-direction:column
+   
+}
+
+.adminMain div {
+   flex:1;
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   font-size:2em;
+   border:1px solid #000; 
+}
+
+.machineContent {
+   height:92vh;
+   display:flex;
+   flex-direction:column;
+}
+
+.machineContent img {
+   display:block;
+   margin:0 auto;
+}
+
+.addMachine {
+   height:45vh;
+}
+
+.machine-options {
+    text-align:center;
+    margin:1em auto;
+}
+
+#machine-select {
+   font-size:1.2em;
+}
+
+#machine-select option {
+   font-size:0.8em;
+}
+
+.machine-count {
+   margin:1em auto;
+   font-size:1.5em;
+}
+
+.button-align {
+   border:1px solid #000;
+   padding:0.5em;
+   font-size:1.3em;
+   display:block;
+   margin:1em auto;
+}
+
+.gymContent div {
+   margin:1em;
+   font-size:1.3em;
+}
+
+.favBox {
+   border:1px solid #000;
+}

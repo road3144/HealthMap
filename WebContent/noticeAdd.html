@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<meta charset="utf-8">
+<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
+<script src="https://kit.fontawesome.com/da8787eeee.js" crossorigin="anonymous"></script>
+<title>공지사항</title>
+<style>
+.full {
+	height:100%;
+	width:100%;
+	padding-left:2em;
+}
+</style>
+</head>
+<body>
+	<nav class="navbar navbar_items">
+		<button style="color: white;" onclick="back()"><i class="fas fa-chevron-left"></i></button>
+		<div>공지사항 추가</div>
+		<div>
+			<button style="color:white;" onclick="noticeAdd()"><i class="fas fa-check"></i></button>
+		</div>
+	</nav>
+	<div class="noticeList">
+		<table style="height:10%;">
+			<tr>
+				<th><input class="full" type="text" placeholder="제목" id="noticeTitle"></th>
+				<th>운영진</th>
+			</tr>
+		</table>
+		<textarea style="height:90%; width:100%; padding:8px 12px;" placeholder="공지사항을 작성해주세요." id="noticeContent"></textarea>
+	</div>
+</body>
+</html>
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+function noticeAdd() {
+	var noticeTitle = $("#noticeTitle").val().trim();
+	var noticeContent = $("#noticeContent").val().trim();
+	
+	var noticeObj = {
+		title : noticeTitle,
+		content : noticeContent,
+		ts : getToday()
+	};
+	var params = {
+		jsonstr : JSON.stringify(noticeObj)
+	};
+	
+	AJAX.call("jsp/noticeAdd.jsp", params, function(data) {
+		var code = data.trim();
+		if(code == "ER"){
+		   alert("오류입니다.");
+		}else{
+		   alert("공지사항이 추가되었습니다.");
+		   back();
+		}
+	});
+}
+
+function getToday() {
+	   var date = new Date();
+	   var year = date.getFullYear();
+	   var month = ("0" + (1 + date.getMonth())).slice(-2);
+	   var day = ("0" + date.getDate()).slice(-2);
+	   return year + "-" + month + "-" + day;
+	}
+
+function back() {
+	window.history.back();
+}
+</script>

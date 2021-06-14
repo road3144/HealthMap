@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<meta charset="utf-8">
+<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
+<script src="https://kit.fontawesome.com/da8787eeee.js" crossorigin="anonymous"></script>
+<title>회원상세</title>
+</head>
+<body>
+	<div id="all">
+		<nav class="navbar navbar_items">
+			<button style="color: white;"><i class="fas fa-chevron-left" onclick="back()"></i></button>
+			<div>회원 관리 상세</div>
+			<button onclick ="deleteUser()" style="color: white;"><i class="fas fa-trash-alt"></i></button>
+		</nav>
+		<div id="user"></div>
+	</div>
+</body>
+</html>
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+$(document).ready(function(){
+	var uno = sessionStorage.getItem("uno");
+   AJAX.call("jsp/userGet.jsp", {uno:uno}, function(data) {
+      var user = JSON.parse(data.trim());
+      console.log(user);
+      showUser(user);
+   });
+});
+
+function showUser(user){
+	var str = '';
+	str += '<div>';
+	str += '<div class="imgAndName">';
+	str += '<img class="myimg" src="./images/'+ user.images[0] +'">';
+	str += '<span class="myname" style="top: 0;">'+ user.name +'</span>';
+	str += '</div>';
+	str += '<div class="numberAndAddress">';
+	str += '<span>전화번호 ' + user.tel + '</span><br>';
+	str += '<span>주소 ' + user.address + '</span><br>';
+	str += '<span>생년월일 ' + user.birth + '</span>';
+	str += '</div>';
+	str += '</div>';
+	$("#user").append(str);	
+}
+function deleteUser(){
+	var uno = sessionStorage.getItem("uno");
+	var url ="jsp/withdraw.jsp";
+	AJAX.call(url, {uno:uno}, function(data) {
+		var code = data.trim();
+		if(code == "OK") {
+			sessionStorage.removeItem("uno");
+			alert("회원 삭제가 완료되었습니다.");
+			back();
+		}
+		else if (code == "NA") {
+			alert("회원 정보를 찾을 수 없습니다.");
+		}
+		else { 
+			alert("회원 삭제중 처리 중 오류가 발생하였습니다.");
+		}
+	});
+}
+function back() {
+	window.history.back();
+}
+</script>

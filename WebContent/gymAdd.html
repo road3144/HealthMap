@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<meta charset="utf-8">
+<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
+<script src="https://kit.fontawesome.com/da8787eeee.js" crossorigin="anonymous"></script>
+<title>회원상세</title>
+</head>
+<body>
+	<nav class="navbar navbar_items">
+			<button style="color: white;" onclick="back()"><i class="fas fa-chevron-left"></i></button>
+			<div>시설추가</div>
+			<button></button>
+		</nav>
+	<div class="gymContent">
+		<div>
+			<span>시설 이름 : </span>
+			<input type="text" id ="gymName"placeholder="시설 이름을 입력해주세요.">
+		</div>
+		<div>
+			<span>전화번호 : </span>
+			<input type="text" id ="gymTel" placeholder="전화번호를 입력해주세요.">
+		</div>
+		<div>
+			<span>주소 : </span>
+			<input type="text" id ="gymAddress" placeholder="주소를 입력해주세요.">
+		</div>
+		<div>
+			<span>주소 x 좌표값 : </span>
+			<input type="text" id ="gymX" placeholder="x 좌표값를 입력해주세요.">
+		</div>
+		<div>
+			<span>주소 y 좌표값 : </span>
+			<input type="text" id ="gymY" placeholder="y 좌표값를 입력해주세요.">
+		</div>
+	</div>
+	<button class="button-align" onclick="addGym()">추가하기</button>
+</body>
+</html>
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+function back() {
+	window.history.back();
+}
+
+function addGym(){
+	var gymname = $("#gymName").val().trim();
+	var gymAddress = $("#gymAddress").val().trim();
+	var gymTel = $("#gymTel").val().trim();
+	var gymX = $("#gymX").val().trim();
+	var gymY = $("#gymY").val().trim();
+	
+	
+	var gymobj = {
+	    address : gymAddress,
+	    name : gymname,
+	    tel : gymTel,
+	    x : gymX,
+	    y : gymY,
+	    ts : getToday()
+	};
+	var params = {
+		jsonstr : JSON.stringify(gymobj)
+	};
+	   
+   var url = "jsp/gymAdd.jsp";
+   AJAX.call(url, params, function(data) {
+      console.log(params);
+      var code = data.trim();
+      if(code == "ER"){
+         alert("오류입니다.");
+      }else{
+         alert("시설이 추가되었습니다.");
+         back();
+      }
+   });
+	   
+}
+function getToday() {
+   var date = new Date();
+   var year = date.getFullYear();
+   var month = ("0" + (1 + date.getMonth())).slice(-2);
+   var day = ("0" + date.getDate()).slice(-2);
+   return year + "-" + month + "-" + day;
+}
+
+</script>

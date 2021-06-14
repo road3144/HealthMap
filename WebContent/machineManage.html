@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<meta charset="utf-8">
+<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
+<script src="https://kit.fontawesome.com/da8787eeee.js" crossorigin="anonymous"></script>
+<title>즐겨찾기</title>
+</head>
+<body>
+	<div id="all">
+		<nav class="navbar navbar_items">
+			<button style="color: white;" onclick="back()"><i class="fas fa-chevron-left"></i></button>
+			<div>기구 관리</div>
+			<button><i class="fas fa-plus-square" style="color:white;" onclick="machineAdd()"></i></button>
+		</nav>
+		<div id = "machine">
+		
+		</div>	
+	</div>
+</body>
+</html>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+var mList = [];
+$(document).ready(function(){
+	AJAX.call("jsp/machineList.jsp",null, function(data) {
+		mList = JSON.parse(data.trim());
+		var str = '';
+		console.log(mList);
+		for(var i=0;i<mList.length; i++){
+			str += showMachine(mList[i]);
+		}
+		$("#machine").append(str);
+    });
+});
+function showMachine(machine){
+	
+	var str = '';
+	str += '<div class="noticeItem">';
+	str += '<div class="align" style="flex:6; border-right:1px solid #0f0f0f;">'+ machine.name +'</div>';
+	str += ' <div class="align" style="flex:1;" onclick="deleteMachine('+ machine.mno +')"><i class="fas fa-trash-alt""></i></div>';
+	str += '</div>';
+	return str;
+}
+function back() {
+	window.history.back();
+}
+
+function machineAdd() {
+	window.location.href = "machineAdd.html";
+}
+
+function deleteMachine(mno) {
+	AJAX.call("jsp/machineDelete.jsp",{mno : mno}, function(data) {
+		var code = data.trim();
+		if(code = "OK"){
+			alert("기구삭제가 완료되었습니다.");
+			window.location.href = "machineManage.html";
+		}else{
+			alert("기구삭제중 오류가 발생하였습니다.");
+			window.location.href = "machineManage.html";
+		}
+    });
+}
+</script>

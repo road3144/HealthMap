@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<meta charset="utf-8">
+<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
+<script src="https://kit.fontawesome.com/da8787eeee.js" crossorigin="anonymous"></script>
+<title>즐겨찾기</title>
+</head>
+<body>
+	<div style="height:100vh;">
+		<nav class="navbar navbar_items">
+			<button style="color: white;" onclick="back()"><i class="fas fa-chevron-left"></i></button>
+			<div>즐겨찾기</div>
+			<button></button>
+		</nav>
+		<div class="favBox" id="fList">
+		</div>
+	</div>
+</body>
+</html>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+$(document).ready(function(){
+	var uno = sessionStorage.getItem("uno");
+	if(uno==null){
+		alert("로그인이 필요한 서비스 입니다.");
+		window.location.href = "login.html";
+	}else{
+		AJAX.call("jsp/favoriteList.jsp", {uno : uno}, function(data) {
+			var fList = JSON.parse(data.trim());
+			var str = "";
+			for(var i=0; i < fList.length;i++){
+				str += showFavoriteList(fList[i]);
+			}
+			$("#fList").append(str);
+	    });
+	}
+});
+
+function showFavoriteList(gym){
+	   var str = ""
+	   str += '<div class="facility">';
+	   str += '<button>'+ gym.name +'</button>';
+	   str += '<button onclick="cancelFavorite('+ gym.gno +')"><i class="far fa-star" style="color:yellow;"></i>즐겨찾기</button>';
+	   str += '</div>'; //facility
+	   str += '<div class="numberAndAddress">';
+	   str += '<span>전화번호 '+ gym.tel +'</span><br>';
+	   str += '<span>주소 '+ gym.address +'</span>';
+	   str += '</div>'; //numberAndAddress
+	   str += '<div style="display:flex; justify-content:space-around; border-bottom:1px solid #000;">';
+	   str += '<button></button>';
+	   str += '<button style="border:1px solid #eee; padding:0.3em;" onclick="gym('+ gym.gno +')">시설상세</button>';
+	   str += '</div>';
+	   return str;
+}
+function cancelFavorite(gno){
+	var uno = sessionStorage.getItem("uno");
+	AJAX.call("jsp/favoriteDelete.jsp", {uno:uno,gno:gno}, function(data) {
+		var code = data.trim();
+	       if(code == "ER"){
+	    	   alert("즐겨찾기취소중 오류가 발생하였습니다.");
+	    	   location.reload();
+	       }else{
+	    	   alert("즐겨찾기취소가 성공적으로 완료되었습니다..");
+	    	   location.reload();
+	       }
+	});
+}
+function back() {
+	window.history.back();
+}
+
+function gym(gno) {
+	sessionStorage.setItem("gno",gno);
+	window.location.href = "gym.html";s
+}
+
+</script>

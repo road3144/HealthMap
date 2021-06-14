@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<meta charset="utf-8">
+<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
+<script src="https://kit.fontawesome.com/da8787eeee.js" crossorigin="anonymous"></script>
+<title>즐겨찾기</title>
+</head>
+<body>
+   <div id="all">
+      <nav class="navbar navbar_items">
+         <button style="color: white;" onclick="back()"><i class="fas fa-chevron-left"></i></button>
+         <div>기구추가</div>
+         <button></button>
+      </nav>
+      <div class="machine-options">
+         <input type="text" style="font-size:1.5em;" placeholder="기구 이름" id ="machineName">
+         
+      </div>
+      <button class="button-align" onclick = addMachine()>추가하기</button>
+   </div>
+</body>
+</html>
+
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+
+
+function addMachine(){
+
+   var machineName = $("#machineName").val().trim();
+   var machineobj = {
+         name : machineName
+      };
+   
+   var params = {
+         jsonstr : JSON.stringify(machineobj)
+      };
+   
+      
+   var url = "jsp/machineAdd.jsp";
+   AJAX.call(url, params, function(data){
+   console.log(params);
+    var code = data.trim();
+    if(code == "ER"){
+       alert("오류입니다.");
+    }else{
+       alert("기구가 추가되었습니다.");
+       back();
+    }
+ });
+}
+function back() {
+	window.history.back();
+}
+
+</script>

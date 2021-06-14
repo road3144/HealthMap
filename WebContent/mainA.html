@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<meta charset="utf-8">
+<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
+<script src="https://kit.fontawesome.com/da8787eeee.js" crossorigin="anonymous"></script>
+<title>헬맵</title>
+</head>
+<body>
+	<div style="height:100vh;">
+		<nav class="navbar navbar_items" style="justify-content:space-around;">헬맵</nav>
+		<div class="adminMain">
+			<div onclick="gymManage()">시설관리</div>
+			<div onclick="userManage()">회원관리</div>
+			<div onclick="machineManage()">기구 관리</div>
+			<div onclick="noticeManage()">공지사항 관리</div>
+		</div>
+	</div>
+</body>
+</html>
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+function gymManage() {
+	window.location.href = "gymManage.html";
+}
+
+function userManage() {
+	window.location.href = "userManage.html";
+}
+
+function machineManage() {
+	window.location.href = "machineManage.html";
+}
+
+function noticeManage() {
+	window.location.href = "noticeManage.html";
+}
+
+</script>

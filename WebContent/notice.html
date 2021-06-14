@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<meta charset="utf-8">
+<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
+<script src="https://kit.fontawesome.com/da8787eeee.js" crossorigin="anonymous"></script>
+<title>공지사항</title>
+</head>
+<body>
+	<nav class="navbar navbar_items">
+		<button style="color: white;" onclick="back()"><i class="fas fa-chevron-left"></i></button>
+		<div>공지사항</div>
+		<button></button>
+	</nav>
+	<div id="notice"></div>
+</body>
+</html>
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+$(document).ready(function(){
+	var nno = sessionStorage.getItem("nno");
+	console.log(nno);
+   AJAX.call("jsp/noticeGet.jsp", {nno:nno}, function(data) {
+      var notice = JSON.parse(data.trim());
+      showNotice(notice);
+   });
+});
+
+function showNotice(notice){
+	console.log(notice);
+	var str = '';
+	str += '<div class="noticeList">';
+	str += '<table>';
+	str += '<tr>';
+	str += '<th >제목: ' + notice.title + '</th>';
+	str += '<th>운영진</th>';
+	str += '</tr>';
+	str += '</table>';
+	str += '<div class="noticeContent">' + notice.content +'</div>';
+	str += '</div>';
+	$("#notice").append(str);	
+}
+
+function back() {
+	window.history.back();
+}
+</script>

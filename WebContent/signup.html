@@ -1,0 +1,134 @@
+<html>
+<head>
+<meta name=viewport content="width=device-width, initial-scale=1, user-scalable=0">
+<meta charset="utf-8">
+<link rel="stylesheet" href="css/core.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://kit.fontawesome.com/da8787eeee.js" crossorigin="anonymous"></script>
+<title>SignUp</title>
+<style>
+.desc {
+   float:left;
+   width:100%;
+   color:#888;
+   font-size:0.9em;
+}
+</style>
+</head>
+<body>
+	<nav class="navbar navbar_items">
+		<button style="color: white;" onclick="back()"><i class="fas fa-chevron-left"></i></button>
+		<div>회원가입</div>
+		<button></button>
+	</nav>
+	<div class="page-body" style="padding-top:0;">
+       <div class="section pad-24 mtop-30">
+          <input id="id" type="text" placeholder="아이디 (이메일주소)">
+          <input id="ps" type="password" class="mtop-10" placeholder="패스워드">
+          <input id="ps2" type="password" class="mtop-10" placeholder="패스워드 확인">
+          <input id="name" type="text" class="mtop-10" placeholder="이름">
+          <input id="tel" type="text" class="mtop-10" placeholder="전화번호">
+          <input id="address" type="text" class="mtop-10" placeholder="주소">
+          <input id="birth" type="text" class="mtop-10" placeholder="생년월일(앞자리)">
+          <input type="file" id="image" class="mtop-10">
+          <input type="submit" class="mtop-20" value="회원가입하기" onclick="signup()">
+       </div>
+    </div>
+</body>
+</html>
+
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/core.js"></script>
+<script>
+function signup() {
+   var id = $("#id").val().trim();
+   if(id == "") {
+      alert("아이디를 입력해 주세요.");
+      $("#id").focus();
+      return;
+   }
+   
+   var ps = $("#ps").val().trim();
+   if(ps == "") {
+      alert("패스워드를 입력해 주세요.");
+      $("#ps").focus();
+      return;
+   }
+   
+   var ps2 = $("#ps2").val().trim();
+   if(ps != ps2) {
+      alert("입력된 두 개의 패스워드가 일치하지 않습니다.");
+      $("#ps2").focus();
+      return;
+   }
+   
+   var name = $("#name").val().trim();
+   if(name == "") {
+      alert("이름을 입력해 주세요.");
+      $("#name").focus();
+      return;
+   }
+   
+   var tel = $("#tel").val().trim();
+   if(name == "") {
+      alert("전화번호를 입력해 주세요.");
+      $("#tel").focus();
+      return;
+   }
+   
+   var address = $("#address").val().trim();
+   if(name == "") {
+      alert("주소를 입력해 주세요.");
+      $("#address").focus();
+      return;
+   }
+   
+   var birth = $("#birth").val().trim();
+   if(name == "") {
+      alert("생년월일을 입력해 주세요.");
+      $("#birth").focus();
+      return;
+   }
+   var imgobj = $("#image")[0].files[0];
+   console.log(imgobj);
+   var userobj = {id: id, password: ps, name: name, tel: tel, address: address, birth: birth, ts: getToday()};
+   if (imgobj != null) {
+      userobj.images = [imgobj.name]; 
+   }
+   
+   var params = new FormData();
+   
+   params.append("jsonstr", JSON.stringify(userobj));
+   
+   if (imgobj != null) {
+      params.append("image", imgobj);
+   }
+   console.log(params);
+   var url ="jsp/signup.jsp";
+   AJAX.call(url, params, function(data) {
+      var code = data.trim();
+      if(code == "EX") {
+         alert("이미 가입한 회원입니다.");
+      }
+      else if (code == "ER") {
+         alert("회원가입 처리중 에러가 발생하였습니다.");
+      }
+      else { 
+    	 alert("회원가입이 성공적으로 완료되었습니다.");
+         window.location.href = "login.html";
+      }
+   },true,false);
+}
+
+function getToday() {
+   var date = new Date();
+   var year = date.getFullYear();
+   var month = ("0" + (1 + date.getMonth())).slice(-2);
+   var day = ("0" + date.getDate()).slice(-2);
+   return year + "-" + month + "-" + day;
+}
+
+function back() {
+	window.history.back();
+}
+</script>
