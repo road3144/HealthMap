@@ -8,19 +8,21 @@
 <title>헬맵</title>
 </head>
 <body>
-   <div id="menuap"></div>
+  
    <nav class="navbar navbar_items">
       <i class="fas fa-bars" onclick="menuSet()"></i>
       <div class="logo">헬맵</div>
       <div>
       </div>
    </nav>
+   
    <div id="map"></div>
+    <div id="menuap"></div>
    <div id="lowDis"></div>
 </body>
 </html>
-<script src="js/jquery-3.6.0.min.js"></script>
-<script src="js/core.js"></script>
+<script src="js/jquery-3.6.0.min.js" charset="UTF-8"></script>
+<script src="js/core.js" charset="UTF-8"></script>
 <script
    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3f072e71eb1e49fc61e9c6732b351e28"></script>
 <script>
@@ -47,7 +49,7 @@ function setData(gymList){
 
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 mapOption = {
-   center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+   center : new kakao.maps.LatLng(37.643362, 127.105596), // 지도의 중심좌표
    level : 5
 // 지도의 확대 레벨 
 };
@@ -157,10 +159,9 @@ function addFavorite(gno){
 	       var code = data.trim();
 	       if(code == "ER"){
 	    	   alert("즐겨찾기중 오류가 발생하였습니다.");
-	    	   location.reload();
 	       }else{
-	    	   alert("즐겨찾기가 성공적으로 완료되었습니다..");
-	    	   location.reload();
+	    		alert("즐겨찾기가 성공적으로 완료되었습니다..");
+	    		showFavorite();
 	       }
 	    });
 	}
@@ -204,13 +205,14 @@ function showSidebar(user){
     if(user == null){
     	 str += '<button class="loginbtn" onclick = "showLogin()">로그인</button>';
          str += '<div class="imgAndName">';
-         str += '<img class="myimg" src="./images/다운로드.jpeg">';
+         str += '<img class="myimg" src="./images/default.jpeg">';
          str += '<div class="myname">이름</div>';
     }else{
-    	console.log(user.images[0]);
     	 str += '<button class="loginbtn" onclick = "logout()">로그아웃</button>';
          str += '<div class="imgAndName">';
-         str += '<img class="myimg" src="./images/'+user.images[0]+'">';
+         var decodeStr = decodeURIComponent(user.images[0]);
+         console.log(decodeStr);
+         str += '<img class="myimg" src="./images/'+ decodeStr +'">';
          str += '<div class="myname">'+ user.name +'</div>';
     }
     str += '</div>';
@@ -223,11 +225,9 @@ function showSidebar(user){
     $("#menuap").html(str);
 }
 function logout(){
-	AJAX.call("jsp/logout.jsp", null, function(data) {
-		alert("로그아웃을 완료하였습니다.");
-		sessionStorage.removeItem("uno");
-		window.location.href = "map.html";
-	});
+	alert("로그아웃을 완료하였습니다.");
+	sessionStorage.removeItem("uno");
+	window.location.href = "map.html";
 }
 function closeMenu(){
    var str =""

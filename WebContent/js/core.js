@@ -2,7 +2,7 @@ var AJAX = {
 	call: function(url, params, func, isfd,isasync) {
 		var callobj = {
 			url: url,
-			type: "post",
+			type: "POST",
 			data: params,
 			dataType: "text",
 			success: func,
@@ -20,7 +20,7 @@ var AJAX = {
 			callobj.processData = false;
 			callobj.contentType = false;
 		}
-		if(isasync=true) callobj.async = false;
+		if(isasync) callobj.async = false;
 		jQuery.ajax(callobj);
 	}
 }

@@ -38,11 +38,11 @@ $(document).ready(function(){
 function showUser(user){
 	console.log(user);
 	var str = '';
-	str += '<div class="imgAndName">';
+	str += '<div class="imgAndName" style="padding-left:2em;">';
 	str += '<img class="myimg" src="./images/'+ user.images[0] +'">';
-	str += '<span class="myname" style="top: 0;">'+ user.name+'</span>';
 	str += '</div>'; // imgAndName
 	str += '<div class="numberAndAddress">';
+	str += '<span>'+ user.name+'</span><br>';
 	str += '<span>전화번호 '+ user.tel +'</span><br> ';
 	str += '<span>주소 '+ user.address +'</span><br>';
 	str += '<span>생년월일 '+ user.birth +'</span>';

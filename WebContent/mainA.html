@@ -9,7 +9,11 @@
 </head>
 <body>
 	<div style="height:100vh;">
-		<nav class="navbar navbar_items" style="justify-content:space-around;">헬맵</nav>
+		<nav class="navbar navbar_items">
+			<button onclick="logoutAdmin()" style="color:white">로그아웃</button>
+			<div class="logo">헬맵</div>
+			<button style="color:#263343;">로그아웃</button>
+		</nav>
 		<div class="adminMain">
 			<div onclick="gymManage()">시설관리</div>
 			<div onclick="userManage()">회원관리</div>
@@ -23,6 +27,14 @@
 <script src="js/jquery-3.6.0.min.js"></script>
 <script src="js/core.js"></script>
 <script>
+var uno = null;
+$(document).ready(function(){
+	uno = sessionStorage.getItem("uno");
+	if(uno!="1"){
+		alert("일반 회원은 들어 올 수 없습니다.");
+		window.location.href = "map.html";
+	}
+});
 function gymManage() {
 	window.location.href = "gymManage.html";
 }
@@ -37,6 +49,12 @@ function machineManage() {
 
 function noticeManage() {
 	window.location.href = "noticeManage.html";
+}
+
+function logoutAdmin(){
+	alert("로그아웃을 완료하였습니다.");
+	sessionStorage.removeItem("uno");
+	window.location.href = "map.html";
 }
 
 </script>

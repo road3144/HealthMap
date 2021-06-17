@@ -66,6 +66,7 @@ function login() {
 			alert("패스워드가 일치하지 않습니다.");
 		}
 		else if (code == "AD") {
+			sessionStorage.setItem("uno","1");
 			window.location.href = "mainA.html";
 		}
 		else {
